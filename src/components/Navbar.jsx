@@ -1,84 +1,64 @@
 // src/components/Navbar.jsx
 import React, { useState } from 'react';
-import { Menu, Users, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Map, CalendarPlus, Home } from 'lucide-react';
 
 function Navbar() {
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
-  const handleNavigate = (path) => {
-    navigate(path);
-    setOpen(false);
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  const isActive = (path) => location.pathname.startsWith(path);
 
   return (
-    <>
-      {/* Top Nav Bar */}
-      <nav className="flex items-center justify-between px-4 sm:px-6 py-3 bg-white bg-opacity-70 backdrop-blur-sm shadow-md">
-        <div className="flex items-center gap-2 text-blue-700 font-bold text-lg sm:text-xl">
-          <Users />
-          <span>ReunionTrips</span>
-        </div>
+    <nav className="bg-white shadow-md px-6 py-4 sticky top-0 z-50">
+      <div className="flex items-center justify-between max-w-7xl mx-auto">
+        <Link to="/Trips" className="text-2xl font-extrabold text-blue-700 tracking-tight flex items-center gap-2">
+          <Map className="w-6 h-6" /> TripMate
+        </Link>
 
-        {/* Desktop Nav Links */}
-        <div className="hidden sm:flex gap-6">
-          <button
-            onClick={() => handleNavigate('/')}
-            className="text-gray-700 hover:text-blue-600"
+        <div className="hidden md:flex space-x-8 text-sm font-semibold text-gray-700">
+          <Link
+            to="/Trips"
+            className={`hover:text-blue-700 transition ${isActive('/Trips') ? 'text-blue-700 underline underline-offset-4' : ''}`}
           >
-            Home
-          </button>
-          <button
-            onClick={() => handleNavigate('/planner')}
-            className="text-gray-700 hover:text-blue-600"
+            My Trips
+          </Link>
+          <Link
+            to="/planner"
+            className={`hover:text-blue-700 transition ${isActive('/planner') ? 'text-blue-700 underline underline-offset-4' : ''}`}
           >
             Plan a Trip
-          </button>
+          </Link>
         </div>
 
-        {/* Hamburger Menu for Mobile */}
-        <button className="sm:hidden" onClick={() => setOpen(true)}>
-          <Menu size={24} />
+        {/* Mobile Toggle Button */}
+        <button className="md:hidden text-blue-700" onClick={toggleMenu}>
+          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
-      </nav>
+      </div>
 
       {/* Mobile Drawer */}
-      {open && (
-        <>
-          <div
-            className="fixed inset-0 bg-black bg-opacity-40 z-40"
-            onClick={() => setOpen(false)}
-          />
-          <div className="fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 px-6 py-4 transition-transform duration-300">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2 text-blue-700 font-bold text-lg">
-                <Users />
-                <span>ReunionTrips</span>
-              </div>
-              <button onClick={() => setOpen(false)}>
-                <X size={24} />
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <button
-                onClick={() => handleNavigate('/')}
-                className="text-gray-800 hover:text-blue-600 text-left"
-              >
-                Home
-              </button>
-              <button
-                onClick={() => handleNavigate('/planner')}
-                className="text-gray-800 hover:text-blue-600 text-left"
-              >
-                Plan a Trip
-              </button>
-            </div>
-          </div>
-        </>
+      {isOpen && (
+        <div className="md:hidden mt-4 space-y-3 bg-white border-t pt-4 pb-6 px-4 shadow-inner">
+          <Link
+            to="/Trips"
+            onClick={toggleMenu}
+            className="block text-blue-700 font-medium flex items-center gap-2"
+          >
+            <Map className="w-4 h-4" /> My Trips
+          </Link>
+          <Link
+            to="/planner"
+            onClick={toggleMenu}
+            className="block text-blue-700 font-medium flex items-center gap-2"
+          >
+            <CalendarPlus className="w-4 h-4" /> Plan a Trip
+          </Link>
+        </div>
       )}
-    </>
+    </nav>
   );
 }
 
