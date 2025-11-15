@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CalendarDays, MapPin, PlaneTakeoff, Users, ImageIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const UNSPLASH_ACCESS_KEY = '_raBdfzRir6mbtiEcT4cRegBipNL2XVufQSH444_FOw';
+const UNSPLASH_ACCESS_KEY = 'your_unsplash_access_key_here';
 
 function Trips() {
   const [trips, setTrips] = useState([]);

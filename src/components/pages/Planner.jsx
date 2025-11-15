@@ -12,7 +12,7 @@ import {
   ImageIcon,
 } from 'lucide-react';
 
-const UNSPLASH_ACCESS_KEY = '_raBdfzRir6mbtiEcT4cRegBipNL2XVufQSH444_FOw';
+const UNSPLASH_ACCESS_KEY = 'your_unsplash_access_key_here';
 
 function Planner() {
   const navigate = useNavigate();

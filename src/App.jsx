@@ -5,7 +5,7 @@ import Home from './components/pages/Home';
 import Planner from './components/pages/Planner';
 import Trips from './components/pages/Trips';
 import TripDetails from './components/pages/TripDetails';
-import Navbar from './components/Navbar'; // 👈 Import the Navbar
+import Navbar from './components/Navbar';
 
 function App() {
   return (
